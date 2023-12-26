@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const personaApi = axios.create({
+    //baseURL:"http://ip172-18-0-11-cm5ko1io7r5g009oal20-5173.direct.labs.play-with-docker.com/api"
     baseURL:"http://127.0.0.1:8000/api"
 })
 
