@@ -1,6 +1,6 @@
 # Dockerfile
 # Usamos una imagen de Node.js para construir la aplicación
-FROM node:14
+FROM node:21
 
 # Directorio de trabajo
 WORKDIR /app
@@ -19,4 +19,5 @@ EXPOSE 5173
 
 # Comando para iniciar la aplicación
 #CMD ["npm", "run", "dev"]
-CMD ["npm", "run", "dev -- --host 0.0.0.0"]
+#CMD ["npm", "run", "dev -- --host 0.0.0.0"]
+CMD ["npm", "run", "dev -- --host"]
