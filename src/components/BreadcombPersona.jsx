@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import { ModalPersona } from './ModalPersona'
 
-export const BreadcombPersona = () => {
+export const BreadcombPersona = ({ onUpdateTable }) => {
   return (
     <>
          <div className="breadcrumb">
@@ -28,7 +29,10 @@ export const BreadcombPersona = () => {
                 </div>
             </div>
             
-            <ModalPersona />
+            <ModalPersona onUpdateTable={onUpdateTable} /> {/* Pasa la función de actualización como prop */}
     </>
   )
+}
+BreadcombPersona.propTypes = {
+    onUpdateTable: PropTypes.func
 }

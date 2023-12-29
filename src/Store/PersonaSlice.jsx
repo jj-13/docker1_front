@@ -80,6 +80,8 @@ const personSlice = createSlice({
         .addCase(createPerson.fulfilled, (state, action)=>{
             console.log('createPerson entro fulfilled')            
             state.rows = action.payload.data
+            console.log('Status code:', action.payload.status) // Aquí obtienes el código de estado
+            console.log('Status code:', action.payload) // Aquí obtienes el código de estado
         })
         .addCase(createPerson.rejected, (state, action)=>{
             console.log('createPerson entro rejected')

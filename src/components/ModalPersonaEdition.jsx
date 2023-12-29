@@ -3,8 +3,9 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { updatePerson } from "../Store/PersonaSlice"
 import { useForm } from "react-hook-form"
+import toast, { Toaster } from "react-hot-toast"
 
-export const ModalPersonaEdition = ({idRow, detailPersona}) => {
+export const ModalPersonaEdition = ({idRow, detailPersona, onUpdateTable}) => {
 
     const dispatch = useDispatch()    
     const {register, handleSubmit, 
@@ -44,7 +45,25 @@ export const ModalPersonaEdition = ({idRow, detailPersona}) => {
             } 
         }
         console.log(body)
-        dispatch(updatePerson(body))
+        dispatch(updatePerson(body)).then((result) =>{
+            // console.log('dispatch_categoryProduct')
+            // console.log(result)
+            // console.log(result.payload)
+            if (result.payload){
+                toast.success("Update succesfully.",{
+                    duration:5000,
+                    position:"top-right",
+                    style:{
+                        background:"#101010",
+                        color:"white"
+                    }
+                })
+                onUpdateTable() // Llama a la función de actualización después de completar la creación
+            }
+        }).catch((error) => {
+            //alert("Error:" + error)
+            toast.error(error)
+        })
         //console.log(data.correo)
         //una ves verificada la data del form
     
@@ -59,6 +78,8 @@ export const ModalPersonaEdition = ({idRow, detailPersona}) => {
     })    
   return (
     <>
+        <Toaster position='top-right' reverseOrder={false} /> 
+
         <div className="modal fade" id="modalPersonaEdition" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -196,5 +217,6 @@ export const ModalPersonaEdition = ({idRow, detailPersona}) => {
 
 ModalPersonaEdition.propTypes = {
     idRow: PropTypes.number, 
-    detailPersona: PropTypes.object
+    detailPersona: PropTypes.object,
+    onUpdateTable: PropTypes.func
 }

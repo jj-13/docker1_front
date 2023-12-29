@@ -8,6 +8,7 @@ export const Persona = () => {
     const dispatch = useDispatch()
     const [columns, setColumns] = useState([])
     const [rows, setRows] = useState([])
+    const [updateTable, setUpdateTable] = useState(false); // Nuevo estado local
 
     useEffect(()=>{   
         dispatch(person()).then((result) =>{
@@ -23,19 +24,23 @@ export const Persona = () => {
                 //console.log("")
             }
         })
-      }, [dispatch])
+      }, [dispatch, updateTable])
+
+    const handleUpdateTable = () => {
+        setUpdateTable((prev) => !prev); // Cambiará el estado y desencadenará un nuevo efecto
+    };
 
   return (
     <>
-        <BreadcombPersona/>
+        <BreadcombPersona onUpdateTable={handleUpdateTable} /> {/* Pasa la función de actualización como prop */}
 
         <PersonaTable
         title="Personas"
         optionalText=""
         columns={ columns } 
         rows={ rows }
+        onUpdateTable={handleUpdateTable}
         />
-    </>
-    
+    </>    
   )
 }

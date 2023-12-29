@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const personaApi = axios.create({
-    baseURL:"http://ip172-18-0-40-cm61rjks9otg00ch9970-8000.direct.labs.play-with-docker.com/api"
-    //baseURL:"http://127.0.0.1:8000/api"
+    //baseURL:"http://ip172-18-0-40-cm61rjks9otg00ch9970-8000.direct.labs.play-with-docker.com/api"
+    baseURL:"http://127.0.0.1:8000/api"
 })
 
 export const getPersonaTable = async () => {
@@ -45,13 +45,18 @@ export const createPersona = async (body) => {
         measure_unit: parseInt(body.form.measure_unit), 
         category_product: parseInt(body.form.category_product)
     }, {headers: body.headers}) */
-    const request = await personaApi.post('/persona/', formData, {headers: body.headers})
+    const request = await personaApi.post('/persona/', formData, {headers: body.headers})/* .then((res) => {
+    console.log(res.status)
+    })
+    .catch((error) => {
+    console.error({ error })
+    }) */
     const response = request.data
-    // console.log(request.status)
+    console.log(request)
     // console.log(response)
 
     if(request.status === 200 || request.status === 201){
-        console.log('persona creada')
+        console.log('persona creada, ' + request.status)
         //localStorage.setItem('user', JSON.stringify(response))
     }
 

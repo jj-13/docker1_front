@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalPersonaEdition } from './ModalPersonaEdition'
 import { deletePerson } from "../Store/PersonaSlice"
+import toast, { Toaster } from "react-hot-toast"
 
-export const PersonaTable = ({ title, optionalText, columns, rows }) => {
+export const PersonaTable = ({ title, optionalText, columns, rows, onUpdateTable }) => {
 
     const dispatch = useDispatch() 
     const [idRow, setIdRow] = useState(0)
@@ -31,14 +32,33 @@ export const PersonaTable = ({ title, optionalText, columns, rows }) => {
             } 
         }
         //console.log(body)
-        dispatch(deletePerson(body))
+        dispatch(deletePerson(body)).then(() =>{
+            // console.log('dispatch_categoryProduct')
+            // console.log(result)
+            // console.log(result.payload)
+            toast.success("Delete succesfully.",{
+                duration:5000,
+                position:"top-right",
+                style:{
+                    background:"#101010",
+                    color:"white"
+                }
+            })
+            onUpdateTable() // Llama a la función de actualización después de completar la creación
+        }).catch((error) => {
+            //alert("Error:" + error)
+            toast.error(error)
+        })
     }
   return (
     <>
         <ModalPersonaEdition 
         idRow={idRow}
         detailPersona={detailPersona}
-        />
+        onUpdateTable={onUpdateTable} 
+        /> {/* Pasa la función onUpdateTable de actualización como prop */}
+
+        <Toaster position='top-right' reverseOrder={false} /> 
 
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div className="normal-table-list">
@@ -108,5 +128,6 @@ PersonaTable.propTypes = {
     title: PropTypes.string,
     optionalText: PropTypes.string,
     columns: PropTypes.array,
-    rows : PropTypes.array
+    rows : PropTypes.array,
+    onUpdateTable: PropTypes.func
 }

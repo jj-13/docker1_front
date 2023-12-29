@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux';
 import { createPerson } from "../Store/PersonaSlice"
 import { useForm } from "react-hook-form"
+import toast, { Toaster } from "react-hot-toast"
 
-export const ModalPersona = () => {
+export const ModalPersona = ({ onUpdateTable }) => {
     const dispatch = useDispatch();
     const {register, handleSubmit, 
         formState:{errors}, watch, setValue, reset} = useForm(/* {
@@ -32,7 +34,26 @@ export const ModalPersona = () => {
                 } 
             }
             //console.log(body)
-            dispatch(createPerson(body))
+            dispatch(createPerson(body)).then((result) =>{
+                // console.log('dispatch_categoryProduct')
+                // console.log(result)
+                // console.log(result.payload)
+                if (result.payload){
+                    toast.success("Create succesfully.",{
+                        duration:5000,
+                        position:"top-right",
+                        style:{
+                            background:"#101010",
+                            color:"white"
+                        }
+                    })
+                    onUpdateTable(); // Llama a la función de actualización después de completar la creación
+
+                }
+            }).catch((error) => {
+                //alert("Error:" + error)
+                toast.error(error)
+            })
             //console.log(data.correo)
             //una ves verificada la data del form
         
@@ -43,10 +64,13 @@ export const ModalPersona = () => {
             
             // o limpiar todo el form
             reset()
+            //window.location.reload()
         
           })    
   return (
     <>
+        <Toaster position='top-right' reverseOrder={false} /> 
+
         <div className="modal fade" id="myModalone" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -182,4 +206,7 @@ export const ModalPersona = () => {
 
     </>
   )
+}
+ModalPersona.propTypes = {
+    onUpdateTable: PropTypes.func
 }
