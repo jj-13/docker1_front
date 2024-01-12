@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const personaApi = axios.create({
-    //baseURL:"http://ip172-18-0-40-cm61rjks9otg00ch9970-8000.direct.labs.play-with-docker.com/api"
-    baseURL:"http://127.0.0.1:8000/api"
+    baseURL:"http://ip172-18-0-98-cmgjqaio7r5g00fodlng-8000.direct.labs.play-with-docker.com/api"
+    //baseURL:"http://127.0.0.1:8000/api"
 })
 
 export const getPersonaTable = async () => {

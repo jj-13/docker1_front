@@ -30,3 +30,6 @@ Luego, puedes llamar a este script en tu archivo docker-compose.yaml en la secci
 command: ["/bin/bash", "-c", "/path/to/your/script/startup.sh"]
 
 Recuerda hacer el script ejecutable con el comando chmod +x startup.sh
+
++ ./jenkins_deploy_prod_docker.sh
+Host key verification failed.
